@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 bld.program(
-	packages='gtk+-2.0',
+	packages='libxml-2.0',
 	target='jmdict-notify',
-	source='lala.vala'
+	source='dictionary.vala'
 )
