@@ -1,8 +1,9 @@
 using Sqlite;
 
 class JMDict.Dictionary : GLib.Object {
+	private Database db;
+
 	public Dictionary(string path) {
-		Database db;
 		int rc;
 
 		rc = Database.open(path, out db);
