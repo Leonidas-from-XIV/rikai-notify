@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 
 bld.program(
-	packages='libxml-2.0',
+	packages='sqlite3',
+        uselib='SQLITE',
 	target='jmdict-notify',
 	source='dictionary.vala'
 )
