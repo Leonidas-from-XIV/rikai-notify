@@ -20,8 +20,9 @@ using Gtk;
 class Rikai.Main : GLib.Object {
 	public static int main(string[] args) {
 		Gtk.init(ref args);
-		var dictionary = new Dictionary("/usr/share/tagainijisho/jmdict-en.db");
-		var clipboard = new Clipboard();
+		var dictPath = Dictionary.locate_dictionary();
+		var dictionary = new Dictionary(dictPath);
+		var clipboard = new Clipboard(dictionary);
 
 		Gtk.main();
 

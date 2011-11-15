@@ -18,7 +18,7 @@
 class Rikai.Clipboard : GLib.Object {
 	private Gtk.Clipboard clip;
 
-	public Clipboard() {
+	public Clipboard(Dictionary dict) {
 		clip = Gtk.Clipboard.get(Gdk.Atom.intern("PRIMARY", false));
 		//Signal.connect(clip, "owner_change", clipboard_changed, null);
 		clip.owner_change.connect(() => {

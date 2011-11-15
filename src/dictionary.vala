@@ -21,9 +21,27 @@ class Rikai.Dictionary : GLib.Object {
 	private Database db;
 
 	public Dictionary(string path) {
-		int rc;
-
-		rc = Database.open(path, out db);
+		var rc = Database.open(path, out db);
 	}
 
+	public static string locate_dictionary() {
+		var home = GLib.Environment.get_home_dir();
+		var ff_path = GLib.Path.build_path(GLib.Path.DIR_SEPARATOR_S, home,
+			".mozilla", "firefox");
+		var conf_path = GLib.Path.build_filename(ff_path, "profiles.ini");
+		var kf = new KeyFile();
+		try {
+			kf.load_from_file(conf_path, KeyFileFlags.NONE);
+			var variable_part = kf.get_string("Profile0", "Path");
+			var dict_path = GLib.Path.build_filename(ff_path,
+				variable_part, "extensions",
+				"rikaichan-jpen@polarcloud.com", "dict.sqlite");
+			return dict_path;
+		} catch (KeyFileError err) {
+			// TODO raise error
+			return "kfe";
+		} catch (FileError err) {
+			return "fe";
+		}
+	}
 }
