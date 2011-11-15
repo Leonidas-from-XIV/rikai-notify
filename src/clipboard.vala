@@ -16,11 +16,8 @@
 */
 
 class Rikai.Clipboard : GLib.Object {
-	private Gtk.Clipboard clip;
-
 	public Clipboard(Dictionary dict) {
-		clip = Gtk.Clipboard.get(Gdk.Atom.intern("PRIMARY", false));
-		//Signal.connect(clip, "owner_change", clipboard_changed, null);
+		var clip = Gtk.Clipboard.get(Gdk.Atom.intern("PRIMARY", false));
 		clip.owner_change.connect(() => {
 			stdout.printf("Called\n");
 			string text = clip.wait_for_text();
@@ -28,8 +25,8 @@ class Rikai.Clipboard : GLib.Object {
 				if ((text.get_char() >=  0x4E00 && text.get_char() <= 0x9FAF) ||
 					(text.get_char() >=  0x30A0  && text.get_char() <= 0x30FF) ||
 					(text.get_char() >= 0x3040 && text.get_char() <= 0x309F)) {
-					stdout.printf(text);
-					stdout.printf("\n");
+					stdout.printf("%s\n", text);
+					stdout.printf("%s\n", dict.look_up(text));
 				}
 			}
 		});
