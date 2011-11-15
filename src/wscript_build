@@ -5,5 +5,5 @@ bld.program(
 	packages='sqlite3 gtk+-2.0',
         uselib='SQLITE GTK',
 	target='rikai-notify',
-	source='dictionary.vala'
+	source='dictionary.vala clipboard.vala main.vala'
 )

@@ -15,15 +15,16 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using Sqlite;
+using Gtk;
 
-class Rikai.Dictionary : GLib.Object {
-	private Database db;
+class Rikai.Main : GLib.Object {
+	public static int main(string[] args) {
+		Gtk.init(ref args);
+		var dictionary = new Dictionary("/usr/share/tagainijisho/jmdict-en.db");
+		var clipboard = new Clipboard();
 
-	public Dictionary(string path) {
-		int rc;
+		Gtk.main();
 
-		rc = Database.open(path, out db);
+		return 0;
 	}
-
 }
