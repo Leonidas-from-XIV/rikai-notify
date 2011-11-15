@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 bld.program(
-	packages='sqlite3',
-        uselib='SQLITE',
-	target='jmdict-notify',
+	packages='sqlite3 gtk+-2.0',
+        uselib='SQLITE GTK',
+	target='rikai-notify',
 	source='dictionary.vala'
 )
