@@ -15,18 +15,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using Gtk;
-
-class Rikai.Main : GLib.Object {
-	public static int main(string[] args) {
-		Gtk.init(ref args);
-		var dictPath = Dictionary.locate_dictionary();
-		var notification = new Notification();
-		var dictionary = new Dictionary(dictPath, notification);
-		var clipboard = new Clipboard(dictionary);
-
-		Gtk.main();
-
-		return 0;
+class Rikai.Notification : GLib.Object {
+	public void display(string summary, string body) {
+		stdout.printf("%s %s\n", summary, body);
 	}
 }

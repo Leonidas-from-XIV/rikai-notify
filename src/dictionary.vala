@@ -19,20 +19,23 @@ using Sqlite;
 
 class Rikai.Dictionary : GLib.Object {
 	private Database db;
+	private Notification notification;
 
-	public Dictionary(string path) {
+	public Dictionary(string path, Notification ntfy) {
+		notification = ntfy;
 		var rc = Database.open(path, out db);
 		if (rc != Sqlite.OK) {
 			// TODO: raise error
 		}
 	}
 
-	public string look_up(string phrase) {
+	public void look_up(string phrase) {
 		db.exec("SELECT * FROM dict LIMIT 1", (n_columns, values, column_names) => {
-			// TODO code here
+			for (int i = 0; i < n_columns; i++) {
+				notification.display(values[i], values[i]);
+			}
 			return 0;
 		}, null);
-		return "";
 	}
 
 	public static string locate_dictionary() {

@@ -25,8 +25,7 @@ class Rikai.Clipboard : GLib.Object {
 				if ((text.get_char() >=  0x4E00 && text.get_char() <= 0x9FAF) ||
 					(text.get_char() >=  0x30A0  && text.get_char() <= 0x30FF) ||
 					(text.get_char() >= 0x3040 && text.get_char() <= 0x309F)) {
-					stdout.printf("%s\n", text);
-					stdout.printf("%s\n", dict.look_up(text));
+					dict.look_up(text);
 				}
 			}
 		});
