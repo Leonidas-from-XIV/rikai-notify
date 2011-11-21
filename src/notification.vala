@@ -15,9 +15,21 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using Notify;
 
 class Rikai.Notification : GLib.Object {
-	public void display(string summary, string body) {
-		stdout.printf("Summary: '%s' Body: '%s'\n", summary, body);
+	Notify.Notification? ntfy;
+
+	public void display(string title, string body) {
+		stdout.printf("Title: '%s' Body: '%s'\n", title, body);
+		if (ntfy == null) {
+			Notify.init("rikai-notify");
+			ntfy = new Notify.Notification(title, body, null);
+			ntfy.set_timeout(5500);
+			ntfy.set_urgency(Notify.Urgency.CRITICAL);
+		} else {
+			ntfy.update(title, body, null);
+		}
+		ntfy.show();
 	}
 }
