@@ -30,6 +30,21 @@ class Rikai.Dictionary : GLib.Object {
 	}
 
 	public void look_up(string phrase) {
+		Statement stmt;
+		var sql = """SELECT entry FROM dict WHERE kana LIKE ?1 OR kanji LIKE ?1 LIMIT 1""";
+		if (db.prepare_v2(sql, -1, out stmt) != Sqlite.OK) {
+			stderr.printf("Error preparing.\n");
+		}
+		if (stmt.bind_text(1, phrase, -1) != Sqlite.OK) {
+			stderr.printf("Error binding.\n");
+		}
+		var success = stmt.step();
+		if (success != Sqlite.ROW && success != Sqlite.DONE) {
+			stderr.printf("Error stepping. Code %d.\n", success);
+		}
+		var l = stmt.column_text(0);
+		stmt.reset();
+		stdout.printf("Lookup: '%s'\n", l);
 		db.exec("SELECT * FROM dict LIMIT 1", (n_columns, values, column_names) => {
 			for (int i = 0; i < n_columns; i++) {
 				notification.display(values[i], values[i]);
