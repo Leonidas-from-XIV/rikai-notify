@@ -19,17 +19,15 @@ using Sqlite;
 
 class Rikai.Dictionary : GLib.Object {
 	private Database db;
-	private Notification notification;
 
-	public Dictionary(string path, Notification ntfy) {
-		notification = ntfy;
+	public Dictionary(string path) {
 		var rc = Database.open(path, out db);
 		if (rc != Sqlite.OK) {
 			// TODO: raise error
 		}
 	}
 
-	public void look_up(string phrase) {
+	public string look_up(string phrase) {
 		Statement stmt;
 		var sql = """SELECT entry FROM dict WHERE kana LIKE ?1 OR kanji LIKE ?1 LIMIT 1""";
 		if (db.prepare_v2(sql, -1, out stmt) != Sqlite.OK) {
@@ -44,13 +42,7 @@ class Rikai.Dictionary : GLib.Object {
 		}
 		var l = stmt.column_text(0);
 		stmt.reset();
-		stdout.printf("Lookup: '%s'\n", l);
-		db.exec("SELECT * FROM dict LIMIT 1", (n_columns, values, column_names) => {
-			for (int i = 0; i < n_columns; i++) {
-				notification.display(values[i], values[i]);
-			}
-			return 0;
-		}, null);
+		return l;
 	}
 
 	public static string locate_dictionary() {

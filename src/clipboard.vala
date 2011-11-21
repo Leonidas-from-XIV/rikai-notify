@@ -16,16 +16,17 @@
 */
 
 class Rikai.Clipboard : GLib.Object {
-	public Clipboard(Dictionary dict) {
+	public delegate void NotificationCallback(string summary, string body);
+	public Clipboard(Dictionary dict, NotificationCallback callback) {
 		var clip = Gtk.Clipboard.get(Gdk.Atom.intern("PRIMARY", false));
 		clip.owner_change.connect(() => {
-			stdout.printf("Called\n");
 			string text = clip.wait_for_text();
 			if (text != null) {
 				if ((text.get_char() >=  0x4E00 && text.get_char() <= 0x9FAF) ||
 					(text.get_char() >=  0x30A0  && text.get_char() <= 0x30FF) ||
 					(text.get_char() >= 0x3040 && text.get_char() <= 0x309F)) {
-					dict.look_up(text);
+					var translation = dict.look_up(text);
+					callback(text, translation);
 				}
 			}
 		});

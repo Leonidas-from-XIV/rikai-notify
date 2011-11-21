@@ -22,8 +22,8 @@ class Rikai.Main : GLib.Object {
 		Gtk.init(ref args);
 		var dictPath = Dictionary.locate_dictionary();
 		var notification = new Notification();
-		var dictionary = new Dictionary(dictPath, notification);
-		var clipboard = new Clipboard(dictionary);
+		var dictionary = new Dictionary(dictPath);
+		var clipboard = new Clipboard(dictionary, notification.display);
 
 		Gtk.main();
 

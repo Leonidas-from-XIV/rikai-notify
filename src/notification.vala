@@ -15,8 +15,9 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+
 class Rikai.Notification : GLib.Object {
 	public void display(string summary, string body) {
-		stdout.printf("%s %s\n", summary, body);
+		stdout.printf("Summary: '%s' Body: '%s'\n", summary, body);
 	}
 }
