@@ -20,12 +20,20 @@ using Gtk;
 class Rikai.Main : GLib.Object {
 	public static int main(string[] args) {
 		Gtk.init(ref args);
-		var dictPath = Dictionary.locate_dictionary();
-		var notification = new Notification();
-		var dictionary = new Dictionary(dictPath);
-		var clipboard = new Clipboard(dictionary, notification.display);
+		try {
+			var dictPath = Dictionary.locate_dictionary();
+			var notification = new Notification();
+			var dictionary = new Dictionary(dictPath);
+			var clipboard = new Clipboard(dictionary, notification.display);
 
-		Gtk.main();
+			Gtk.main();
+		} catch (LocationError e) {
+			stderr.printf("Error: %s\n", e.message);
+			return 1;
+		} catch (DatabaseError e) {
+			stderr.printf(
+				"Database cannot be opened. Make sure it is not corrupted\n");
+		}
 
 		return 0;
 	}

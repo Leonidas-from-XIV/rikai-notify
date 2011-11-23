@@ -22,11 +22,22 @@ class Rikai.Clipboard : GLib.Object {
 		clip.owner_change.connect(() => {
 			string text = clip.wait_for_text();
 			if (text != null) {
-				if ((text.get_char() >=  0x4E00 && text.get_char() <= 0x9FAF) ||
-					(text.get_char() >=  0x30A0  && text.get_char() <= 0x30FF) ||
+				if (
+					(text.get_char() >= 0x4E00 && text.get_char() <= 0x9FAF) ||
+					(text.get_char() >= 0x30A0 && text.get_char() <= 0x30FF) ||
 					(text.get_char() >= 0x3040 && text.get_char() <= 0x309F)) {
-					var translation = dict.look_up(text);
-					callback(text, translation);
+					try {
+						var translation = dict.look_up(text);
+						callback(text, translation);
+					} catch (LookupError e) {
+						if (e is LookupError.DATABASE_FAILURE) {
+							stderr.printf("%s\n", e.message);
+						} else {
+							// well, we don't have to do anything
+							stderr.printf("Meaning of phrase '%s' unknown\n",
+								text);
+						}
+					}
 				}
 			}
 		});
