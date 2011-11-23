@@ -30,6 +30,11 @@ class Rikai.Notification : GLib.Object {
 		} else {
 			ntfy.update(title, body, null);
 		}
-		ntfy.show();
+		try {
+			ntfy.show();
+		} catch (Error e) {
+			stderr.printf("Showing notification failed, error %s",
+				e.message);
+		}
 	}
 }
