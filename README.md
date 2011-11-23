@@ -11,7 +11,7 @@ To build and use, you need a number of prerequisites:
 
  * valac (>=0.14.0)
  * libnotify-dev (>=0.7)
- * libgtk2.0-dev
+ * libgtk-3-dev
  * some python (2.x and 3.x are fine)
  * rikaichan & Japanese-English dictionary
 

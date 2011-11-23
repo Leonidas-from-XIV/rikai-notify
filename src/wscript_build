@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 bld.program(
-	packages='sqlite3 gtk+-2.0 libnotify',
+	packages='sqlite3 gtk+-3.0 libnotify',
         uselib='SQLITE GTK NOTIFY',
 	target='rikai-notify',
 	source='dictionary.vala clipboard.vala notification.vala main.vala'

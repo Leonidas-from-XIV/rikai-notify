@@ -17,7 +17,7 @@ def configure(conf):
     conf.check_vala((0, 14, 0))
     conf.check_cfg(package='sqlite3', uselib_store='SQLITE', mandatory=True,
             args='--cflags --libs')
-    conf.check_cfg(package='gtk+-2.0', uselib_store='GTK', mandatory=True,
+    conf.check_cfg(package='gtk+-3.0', uselib_store='GTK', mandatory=True,
             args='--cflags --libs')
     # libnotify 0.5 is not ok, 0.6 neither
     conf.check_cfg(package='libnotify', uselib_store='NOTIFY', mandatory=True,
